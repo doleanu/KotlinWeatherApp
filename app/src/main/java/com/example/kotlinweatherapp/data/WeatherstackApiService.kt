@@ -1,6 +1,6 @@
 package com.example.kotlinweatherapp.data
 
-import com.example.kotlinweatherapp.data.Response.CurrentWeatherResponse
+import com.example.kotlinweatherapp.data.network.Response.CurrentWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
