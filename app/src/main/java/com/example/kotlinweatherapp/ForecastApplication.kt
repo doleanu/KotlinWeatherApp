@@ -3,6 +3,8 @@ package com.example.kotlinweatherapp
 import android.app.Application
 import com.example.kotlinweatherapp.data.db.ForecastDatabase
 import com.example.kotlinweatherapp.data.network.*
+import com.example.kotlinweatherapp.data.provider.UnitProvider
+import com.example.kotlinweatherapp.data.provider.UnitProviderImpl
 import com.example.kotlinweatherapp.data.repository.ForecastRepository
 import com.example.kotlinweatherapp.data.repository.ForecastRepositoryImpl
 import com.example.kotlinweatherapp.ui.weather.current.CurrentWeatherViewModelFactory
@@ -26,7 +28,8 @@ class ForecastApplication: Application(), KodeinAware {
         bind() from singleton { WeatherstackApiService(instance()) }
         bind() from singleton { WeatherNetworkDataSourceImpl(instance()) }
         bind() from singleton { ForecastRepositoryImpl(instance(), instance()) }
-        bind() from provider { CurrentWeatherViewModelFactory(instance()) }
+        bind() from singleton { UnitProviderImpl(instance()) }
+        bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
     }
 
     override fun onCreate() {
