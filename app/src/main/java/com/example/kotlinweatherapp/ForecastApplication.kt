@@ -21,14 +21,13 @@ class ForecastApplication: Application(), KodeinAware {
 
         bind() from singleton { ForecastDatabase(instance()) }
         bind() from singleton { instance<ForecastDatabase>().currentWeatherDao() }
-        bind<ConnectivityInterceptor>() with singleton { ConnectivityInterceptorImpl(instance()) }
+        
+        bind() from singleton { ConnectivityInterceptorImpl(instance()) }
         bind() from singleton { WeatherstackApiService(instance()) }
-        bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance()) }
-        bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance()) }
+        bind() from singleton { WeatherNetworkDataSourceImpl(instance()) }
+        bind() from singleton { ForecastRepositoryImpl(instance(), instance()) }
         bind() from provider { CurrentWeatherViewModelFactory(instance()) }
-
     }
-
 
     override fun onCreate() {
         super.onCreate()

@@ -3,7 +3,7 @@ package com.example.kotlinweatherapp.ui.weather.current
 import androidx.lifecycle.ViewModel
 import com.example.kotlinweatherapp.data.repository.ForecastRepository
 import com.example.kotlinweatherapp.internal.UnitSystem
-import com.example.kotlinweatherapp.internal.lazyDeerred
+import com.example.kotlinweatherapp.internal.lazyDeferred
 
 class CurrentWeatherViewModel(
     private val forecastRepository: ForecastRepository
@@ -13,7 +13,7 @@ class CurrentWeatherViewModel(
     val isMetric: Boolean
         get() = unitSystem == UnitSystem.METRIC
 
-    val weather by lazyDeerred {
+    val weather by lazyDeferred {
         forecastRepository.getCurrentWeather(isMetric)
     }
 }
