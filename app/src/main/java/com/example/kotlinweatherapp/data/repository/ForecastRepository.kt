@@ -7,4 +7,5 @@ import com.example.kotlinweatherapp.data.db.unitlocalized.UnitSpecificCurrentWea
 
 interface ForecastRepository {
     suspend fun getCurrentWeather(metric: Boolean): LiveData<out UnitSpecificCurrentWeatherEntry>
+    suspend fun getWeatherLocation(): LiveData<WeatherLocation>
 }
