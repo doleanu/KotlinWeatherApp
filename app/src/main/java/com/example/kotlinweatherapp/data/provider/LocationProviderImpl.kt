@@ -25,6 +25,6 @@ class LocationProviderImpl() : LocationProvider {
     }
 
     override suspend fun getPreferredLocationString(): String {
-        return "London"
+        return "Bucharest"
     }
 }
