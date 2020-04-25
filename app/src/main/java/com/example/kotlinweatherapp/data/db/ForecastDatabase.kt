@@ -28,9 +28,11 @@ abstract class ForecastDatabase: RoomDatabase() {
         }
 
         // initialise database stored under local storage
-        private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext,
-                ForecastDatabase::class.java, "forecast.db")
+        private fun buildDatabase(context: Context) = Room.databaseBuilder(
+                context.applicationContext,
+                ForecastDatabase::class.java,
+                "forecast.db"
+            )
                 .build()
     }
 }

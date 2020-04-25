@@ -1,5 +1,6 @@
 package com.example.kotlinweatherapp.internal
 
-enum class UnitSystem {
-    METRIC
+enum class UnitSystem() {
+    METRIC,
+    IMPERIAL
 }
