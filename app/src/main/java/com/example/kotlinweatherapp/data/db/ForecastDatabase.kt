@@ -1,20 +1,24 @@
 package com.example.kotlinweatherapp.data.db
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import com.example.kotlinweatherapp.data.db.entity.CurrentWeatherEntry
 import com.example.kotlinweatherapp.data.db.entity.WeatherLocation
 import java.security.AccessControlContext
 
 @Database(
+
     entities = [CurrentWeatherEntry::class, WeatherLocation::class],
+    entities = [CurrentWeatherEntry::class,FutureWeatherDao::class ,WeatherLocation::class],
     version = 1
 )
+@TypeConverters(LocalDateConverter::class)
 abstract class ForecastDatabase: RoomDatabase() {
     abstract fun currentWeatherDao(): CurrentWeatherDao
     abstract fun weatherLocationDao(): WeatherLocationDao
+
+    abstract fun futureWeatherDao(): FutureWeatherDao
+
 
     // Singleton
     companion object {

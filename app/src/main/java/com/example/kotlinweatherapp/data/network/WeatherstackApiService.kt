@@ -1,6 +1,7 @@
 package com.example.kotlinweatherapp.data.network
 
 import com.example.kotlinweatherapp.data.network.Response.CurrentWeatherResponse
+import com.example.kotlinweatherapp.data.network.Response.FutureWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
@@ -20,7 +21,10 @@ interface WeatherstackApiService {
     fun getCurrentWeather(
         @Query("query") location: String
 //      @Query("units") metric: String
+
     ): Deferred<CurrentWeatherResponse>
+
+    ): Deferred<FutureWeatherResponse>
 
     companion object {
         operator fun invoke(
@@ -57,4 +61,46 @@ interface WeatherstackApiService {
                 .create(WeatherstackApiService::class.java)
         }
     }
-}
+
+    @GET("current")
+    fun getFutureWeather(
+        @Query("query") location: String
+//      @Query("units") metric: String
+    ): Deferred<CurrentWeatherResponse>
+
+
+        operator fun invoke(
+            connectivityInterceptorImpl: ConnectivityInterceptorImpl
+        ): WeatherstackApiService {
+            val requestInterceptor = Interceptor { chain ->
+
+                val url = chain.request()
+                    .url()
+                    .newBuilder()
+                    .addQueryParameter(
+                        "access_key",
+                        API_KEY
+                    )
+                    .build()
+                val request = chain.request()
+                    .newBuilder()
+                    .url(url)
+                    .build()
+
+                return@Interceptor chain.proceed(request)
+            }
+
+            val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(requestInterceptor)
+                .addInterceptor(connectivityInterceptorImpl)
+                .build()
+
+            return Retrofit.Builder()
+                .client(okHttpClient)
+                .baseUrl("http://api.weatherstack.com/")
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(WeatherstackApiService::class.java)
+        }
+    }

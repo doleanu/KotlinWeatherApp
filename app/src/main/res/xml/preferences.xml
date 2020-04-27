@@ -15,7 +15,11 @@
             android:key="CUSTOM_LOCATION"
             android:title="Location"
             android:summary="The location for which the weather is displayed"
+<<<<<<< Updated upstream
             android:defaultValue="London"
+=======
+            android:defaultValue="Bucharest"
+>>>>>>> Stashed changes
             android:dependency="USE_DEVICE_LOCATION"/>
 
     </PreferenceCategory>
