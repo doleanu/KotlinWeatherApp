@@ -5,14 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.kotlinweatherapp.data.db.entity.CurrentWeatherEntry
+import com.example.kotlinweatherapp.data.db.entity.WeatherLocation
 import java.security.AccessControlContext
 
 @Database(
-    entities = [CurrentWeatherEntry::class],
+    entities = [CurrentWeatherEntry::class, WeatherLocation::class],
     version = 1
 )
 abstract class ForecastDatabase: RoomDatabase() {
     abstract fun currentWeatherDao(): CurrentWeatherDao
+    abstract fun weatherLocationDao(): WeatherLocationDao
 
     // Singleton
     companion object {
@@ -28,9 +30,11 @@ abstract class ForecastDatabase: RoomDatabase() {
         }
 
         // initialise database stored under local storage
-        private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext,
-                ForecastDatabase::class.java, "forecast.db")
+        private fun buildDatabase(context: Context) = Room.databaseBuilder(
+                context.applicationContext,
+                ForecastDatabase::class.java,
+                "forecast.db"
+            )
                 .build()
     }
 }
