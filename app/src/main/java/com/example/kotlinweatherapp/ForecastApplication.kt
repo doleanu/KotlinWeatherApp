@@ -5,12 +5,9 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.example.kotlinweatherapp.data.db.ForecastDatabase
 import com.example.kotlinweatherapp.data.network.*
-import com.example.kotlinweatherapp.data.provider.UnitProvider
 import com.example.kotlinweatherapp.data.provider.UnitProviderImpl
-import com.example.kotlinweatherapp.data.repository.ForecastRepository
 import com.example.kotlinweatherapp.data.repository.ForecastRepositoryImpl
 import com.example.kotlinweatherapp.ui.weather.current.CurrentWeatherViewModelFactory
-import com.example.weatherapp.data.provider.LocationProvider
 import com.example.weatherapp.data.provider.LocationProviderImpl
 import com.google.android.gms.location.LocationServices
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -21,7 +18,6 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
-import kotlin.math.sin
 
 class ForecastApplication: Application(), KodeinAware {
     override val kodein: Kodein = Kodein.lazy {
@@ -31,7 +27,7 @@ class ForecastApplication: Application(), KodeinAware {
         bind() from singleton { instance<ForecastDatabase>().currentWeatherDao() }
         bind() from singleton { instance<ForecastDatabase>().weatherLocationDao() }
         bind() from singleton { ConnectivityInterceptorImpl(instance()) }
-        bind() from singleton { WeatherstackApiService(instance()) }
+        bind() from singleton { WeatherApiService(instance()) }
         bind() from singleton { WeatherNetworkDataSourceImpl(instance()) }
         bind() from provider { LocationServices.getFusedLocationProviderClient(instance<Context>()) }
         bind() from singleton { LocationProviderImpl(instance(), instance()) }

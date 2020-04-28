@@ -43,7 +43,6 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
 
     private fun bindUI() = launch {
         val currentWeather = viewModel.weather.await()
-
         val weatherLocation = viewModel.weatherLocation.await()
 
         weatherLocation.observe(this@CurrentWeatherFragment, Observer { location ->
@@ -58,39 +57,20 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
 
             group_loading.visibility = View.GONE
             updateDateToToday()
-            updateTemperatures(it.temperature, it.feelslike)
-            updateDescription(it.weatherDescriptions)
-            updatePrecipitation(it.precip)
-            updateWind(it.windDir, it.windSpeed)
-            updateVisibility(it.visibility)
+            updateTemperatures(it.temperature, it.feelsLikeTemperature)
+            updateCondition(it.conditionText)
+            updatePrecipitation(it.precipitationVolume)
+            updateWind(it.windDirection, it.windSpeed)
+            updateVisibility(it.visibilityDistance)
 
             GlideApp.with(this@CurrentWeatherFragment)
-                .load(it.weatherIcons)
+                .load(it.conditionIconUrl)
                 .into(imageView_condition_icon)
         })
     }
 
     private fun chooseLocalizedUnitAbbreviation(metric: String, imperial: String): String {
         return if (viewModel.isMetric) metric else imperial
-    }
-
-    private fun getValue(unitAbreviation: String, value: Double): Double {
-        if (!viewModel.isMetric) {
-            if (unitAbreviation == "°F") {
-                return (value * (9/5)) + 32
-            }
-            if (unitAbreviation == "in") {
-                return value / 25.4
-            }
-            if (unitAbreviation == "mph") {
-                return value / 1.609
-            }
-            if (unitAbreviation == "mi") {
-                return  value / 1.609
-            }
-        }
-
-        return value
     }
 
     private fun updateLocatiom(location: String) {
@@ -103,35 +83,26 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
 
     private fun updateTemperatures(temperature: Double, feelsLike: Double) {
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("°C", "°F")
-        val temp = getValue(unitAbbreviation, temperature)
-        val feelsLikeTemp = getValue(unitAbbreviation, feelsLike)
-
-        textView_temperature.text = "$temp$unitAbbreviation"
-        textView_feels_like_temperature.text = "Feels like $feelsLikeTemp$unitAbbreviation"
+        textView_temperature.text = "$temperature$unitAbbreviation"
+        textView_feels_like_temperature.text = "Feels like $feelsLike$unitAbbreviation"
     }
 
-    private fun updateDescription(description: String) {
-        textView_condition.text = description
+    private fun updateCondition(condition: String) {
+        textView_condition.text = condition
     }
 
     private fun updatePrecipitation(precipitationVolume: Double) {
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("mm", "in")
-        val precip = getValue(unitAbbreviation, precipitationVolume)
-
-        textView_precipitation.text = "Precipitation: $precip$unitAbbreviation"
+        textView_precipitation.text = "Precipitation: $precipitationVolume$unitAbbreviation"
     }
 
     private fun updateWind(windDirection: String, windSpeed: Double) {
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("kph", "mph")
-        val windSp = getValue(unitAbbreviation, windSpeed)
-
-        textView_wind.text = "Wind: $windDirection, $windSp $unitAbbreviation"
+        textView_wind.text = "Wind: $windDirection, $windSpeed $unitAbbreviation"
     }
 
     private fun updateVisibility(visibilityDistance: Double) {
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("km", "mi")
-        val visib = getValue(unitAbbreviation, visibilityDistance)
-
-        textView_visibility.text = "Visibility: $visib $unitAbbreviation"
+        textView_visibility.text = "Visibility: $visibilityDistance $unitAbbreviation"
     }
 }

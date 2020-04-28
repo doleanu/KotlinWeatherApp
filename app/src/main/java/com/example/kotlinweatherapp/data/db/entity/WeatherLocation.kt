@@ -16,8 +16,8 @@ data class WeatherLocation(
     val region: String,
     val lat: Double,
     val lon: Double,
-    @SerializedName("timezone_id")
-    val timezoneId: String,
+    @SerializedName("tz_id")
+    val tzId: String,
     @SerializedName("localtime_epoch")
     val localtimeEpoch: Long
 ) {
@@ -27,7 +27,7 @@ data class WeatherLocation(
     val zoneDateTime: ZonedDateTime
         get() {
             val instant = Instant.ofEpochSecond(localtimeEpoch)
-            val zoneId = ZoneId.of(timezoneId)
+            val zoneId = ZoneId.of(tzId)
             return ZonedDateTime.ofInstant(instant, zoneId)
         }
 }

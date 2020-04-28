@@ -7,7 +7,7 @@ import com.example.kotlinweatherapp.data.network.Response.CurrentWeatherResponse
 import com.example.kotlinweatherapp.internal.NoConnectivityException
 
 class WeatherNetworkDataSourceImpl(
-    private val weatherstackApiService: WeatherstackApiService
+    private val weatherApiService: WeatherApiService
 ) : WeatherNetworkDataSource {
 
     private val _downloadedCurrentWeather = MutableLiveData<CurrentWeatherResponse>()
@@ -16,9 +16,10 @@ class WeatherNetworkDataSourceImpl(
 
     override suspend fun fetchCurrentWeather(location: String) {
         try {
-            val fetchedCurrentWeather = weatherstackApiService
+            val fetchedCurrentWeather = weatherApiService
                 .getCurrentWeather(location)
                 .await()
+            
             _downloadedCurrentWeather.postValue(fetchedCurrentWeather)
         }
         catch (e: NoConnectivityException) {
