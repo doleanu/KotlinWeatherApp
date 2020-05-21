@@ -8,7 +8,7 @@ import com.example.kotlinweatherapp.data.network.*
 import com.example.kotlinweatherapp.data.provider.UnitProviderImpl
 import com.example.kotlinweatherapp.data.repository.ForecastRepositoryImpl
 import com.example.kotlinweatherapp.ui.weather.current.CurrentWeatherViewModelFactory
-import com.example.kotlinweatherapp.ui.weather.future.list.FutureWeatherListViewModelFactory
+import com.example.kotlinweatherapp.ui.weather.future.list.FutureListWeatherViewModelFactory
 import com.example.weatherapp.data.provider.LocationProviderImpl
 import com.google.android.gms.location.LocationServices
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -36,7 +36,7 @@ class ForecastApplication: Application(), KodeinAware {
         bind() from singleton { ForecastRepositoryImpl(instance(), instance(), instance(), instance(), instance()) }
         bind() from singleton { UnitProviderImpl(instance()) }
         bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
-        bind() from provider { FutureWeatherListViewModelFactory(instance(), instance()) }
+        bind() from provider { FutureListWeatherViewModelFactory(instance(), instance()) }
     }
 
     override fun onCreate() {

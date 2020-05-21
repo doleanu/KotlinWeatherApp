@@ -2,7 +2,6 @@ package com.example.kotlinweatherapp.data.db.entity
 
 
 import androidx.room.Embedded
-import com.example.kotlinweatherapp.data.db.entity.Condition
 import com.google.gson.annotations.SerializedName
 
 data class Day(
@@ -11,9 +10,9 @@ data class Day(
     @SerializedName("avgtemp_f")
     val avgtempF: Double,
     @SerializedName("avgvis_km")
-    val avgvisKm: Int,
+    val avgvisKm: Double,
     @SerializedName("avgvis_miles")
-    val avgvisMiles: Int,
+    val avgvisMiles: Double,
     @Embedded(prefix = "condition_")
     val condition: Condition,
     @SerializedName("maxtemp_c")
@@ -32,5 +31,5 @@ data class Day(
     val totalprecipIn: Double,
     @SerializedName("totalprecip_mm")
     val totalprecipMm: Double,
-    val uv: Int
+    val uv: Double
 )

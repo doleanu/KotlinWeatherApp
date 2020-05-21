@@ -34,6 +34,7 @@ class ForecastRepositoryImpl(
             }
         }
     }
+
     override suspend fun getCurrentWeather(metric: Boolean): LiveData<out UnitSpecificCurrentWeatherEntry> {
         initWeatherData()
         return withContext(Dispatchers.IO) {
@@ -71,13 +72,13 @@ class ForecastRepositoryImpl(
 
     private fun persistFetchedFutureWeather(fetchedWeather: FutureWeatherResponse) {
 
-        fun deleteOldFOrecastData() {
+        fun deleteOldForecastData() {
             val today = LocalDate.now()
             futureWeatherDao.deleteOldEntries(today)
         }
 
         GlobalScope.launch(Dispatchers.IO) {
-            deleteOldFOrecastData()
+            deleteOldForecastData()
             val futureWeatherList = fetchedWeather.futureWeatherEntries.entries
             futureWeatherDao.insert(futureWeatherList)
             weatherLocationDao.upsert(fetchedWeather.location)
