@@ -1,11 +1,10 @@
 package com.example.kotlinweatherapp.data.repository
 
-import android.icu.util.TimeZone
 import androidx.lifecycle.LiveData
 import com.example.kotlinweatherapp.data.db.CurrentWeatherDao
 import com.example.kotlinweatherapp.data.db.WeatherLocationDao
 import com.example.kotlinweatherapp.data.db.entity.WeatherLocation
-import com.example.kotlinweatherapp.data.db.unitlocalized.UnitSpecificCurrentWeatherEntry
+import com.example.kotlinweatherapp.data.db.unitlocalized.current.UnitSpecificCurrentWeatherEntry
 import com.example.kotlinweatherapp.data.network.Response.CurrentWeatherResponse
 import com.example.kotlinweatherapp.data.network.WeatherNetworkDataSource
 import com.example.weatherapp.data.provider.LocationProvider
@@ -13,9 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.kodein.di.threadLocal
 import org.threeten.bp.ZonedDateTime
-import java.util.*
 
 class ForecastRepositoryImpl(
     private val currentWeatherDao: CurrentWeatherDao,

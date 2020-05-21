@@ -1,6 +1,7 @@
 package com.example.kotlinweatherapp.data.network
 
 import com.example.kotlinweatherapp.data.network.Response.CurrentWeatherResponse
+import com.example.kotlinweatherapp.data.network.Response.FutureWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
@@ -12,15 +13,21 @@ import retrofit2.http.Query
 
 const val API_KEY = "b7395d60ad20417890b222007202704"
 
-// http://api.weatherapi.com/v1/current.json?key=b7395d60ad20417890b222007202704&q=Iasi
-
 
 interface WeatherApiService {
 
+    // http://api.weatherapi.com/v1/current.json?key=b7395d60ad20417890b222007202704&q=Iasi
     @GET("current.json")
     fun getCurrentWeather(
         @Query("q") location: String
     ): Deferred<CurrentWeatherResponse>
+
+    // http://api.weatherapi.com/v1/future.json?key=b7395d60ad20417890b222007202704&days=3&q=Iasi
+    @GET("forecast.json")
+    fun getFutureWeather(
+        @Query("q") location: String,
+        @Query("days") days: Int
+    ): Deferred<FutureWeatherResponse>
 
     companion object {
         operator fun invoke(

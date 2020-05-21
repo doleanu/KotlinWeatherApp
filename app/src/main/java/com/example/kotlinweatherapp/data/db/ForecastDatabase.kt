@@ -4,16 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.kotlinweatherapp.data.db.entity.CurrentWeatherEntry
 import com.example.kotlinweatherapp.data.db.entity.WeatherLocation
-import java.security.AccessControlContext
 
 @Database(
     entities = [CurrentWeatherEntry::class, WeatherLocation::class],
     version = 1
 )
+@TypeConverters(LocalDateConverter::class)
+
 abstract class ForecastDatabase: RoomDatabase() {
     abstract fun currentWeatherDao(): CurrentWeatherDao
+    abstract fun futureWeatherDao(): FutureWeatherDao
     abstract fun weatherLocationDao(): WeatherLocationDao
 
     // Singleton

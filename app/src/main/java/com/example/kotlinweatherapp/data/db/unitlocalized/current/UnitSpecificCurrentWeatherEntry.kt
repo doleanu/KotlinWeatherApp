@@ -1,4 +1,4 @@
-package com.example.kotlinweatherapp.data.db.unitlocalized
+package com.example.kotlinweatherapp.data.db.unitlocalized.current
 
 interface UnitSpecificCurrentWeatherEntry {
     val temperature: Double
