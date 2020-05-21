@@ -6,10 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.kotlinweatherapp.data.db.entity.CurrentWeatherEntry
+import com.example.kotlinweatherapp.data.db.entity.FutureWeatherEntry
 import com.example.kotlinweatherapp.data.db.entity.WeatherLocation
 
 @Database(
-    entities = [CurrentWeatherEntry::class, WeatherLocation::class],
+    entities = [CurrentWeatherEntry::class, FutureWeatherEntry::class, WeatherLocation::class],
     version = 1
 )
 @TypeConverters(LocalDateConverter::class)

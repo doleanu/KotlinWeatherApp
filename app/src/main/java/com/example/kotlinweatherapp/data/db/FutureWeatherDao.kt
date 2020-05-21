@@ -1,6 +1,7 @@
 package com.example.kotlinweatherapp.data.db
 
 import androidx.lifecycle.LiveData
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -9,6 +10,7 @@ import com.example.kotlinweatherapp.data.db.unitlocalized.future.ImperialSimpleF
 import com.example.kotlinweatherapp.data.db.unitlocalized.future.MetricSimpleFutureWeatherEntry
 import org.threeten.bp.LocalDate
 
+@Dao
 interface FutureWeatherDao {
     @Insert(onConflict =  OnConflictStrategy.REPLACE)
     fun insert(futureweatherEntries: List<FutureWeatherEntry>)
