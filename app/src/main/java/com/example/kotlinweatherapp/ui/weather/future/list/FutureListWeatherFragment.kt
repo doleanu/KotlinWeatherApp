@@ -25,7 +25,7 @@ import org.kodein.di.generic.instance
 class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
 
     override val kodein by closestKodein()
-    private val weatherViewModelFactory: FutureListWeatherViewModelFactory by instance()
+    private val viewModelFactory: FutureListWeatherViewModelFactory by instance()
 
     private lateinit var viewModel: FutureListWeatherViewModel
 
@@ -38,9 +38,8 @@ class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, weatherViewModelFactory)
+        viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(FutureListWeatherViewModel::class.java)
-
         bindUI()
     }
 
@@ -68,14 +67,15 @@ class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun updateDateToNextWeek() {
-        (activity as? AppCompatActivity)?.supportActionBar?.title = "Next Week"
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = "Next Week"
     }
 
-    private fun List<UnitSpecificSimpleFutureWeatherEntry>.toFutureWeatherItems(): List<FutureWeatherItem> {
+    private fun List<UnitSpecificSimpleFutureWeatherEntry>.toFutureWeatherItems() : List<FutureWeatherItem> {
         return this.map {
             FutureWeatherItem(it)
         }
     }
+
     private fun initRecyclerView(items: List<FutureWeatherItem>) {
         val groupAdapter = GroupAdapter<ViewHolder>().apply {
             addAll(items)

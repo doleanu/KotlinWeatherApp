@@ -1,5 +1,6 @@
 package com.example.kotlinweatherapp.ui.weather.future.list
 
+import android.annotation.SuppressLint
 import com.example.kotlinweatherapp.R
 import com.example.kotlinweatherapp.data.db.unitlocalized.future.MetricSimpleFutureWeatherEntry
 import com.example.kotlinweatherapp.data.db.unitlocalized.future.UnitSpecificSimpleFutureWeatherEntry
@@ -29,6 +30,7 @@ class FutureWeatherItem(
         textView_date.text = weatherEntry.date.format(dtFormatter)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun ViewHolder.updateTemperature() {
         val unitAbbreviation = if (weatherEntry is MetricSimpleFutureWeatherEntry) "°C"
         else "°F"
