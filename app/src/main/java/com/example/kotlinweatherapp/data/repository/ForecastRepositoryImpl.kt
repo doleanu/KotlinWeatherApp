@@ -6,7 +6,8 @@ import com.example.kotlinweatherapp.data.db.FutureWeatherDao
 import com.example.kotlinweatherapp.data.db.WeatherLocationDao
 import com.example.kotlinweatherapp.data.db.entity.WeatherLocation
 import com.example.kotlinweatherapp.data.db.unitlocalized.current.UnitSpecificCurrentWeatherEntry
-import com.example.kotlinweatherapp.data.db.unitlocalized.future.UnitSpecificSimpleFutureWeatherEntry
+import com.example.kotlinweatherapp.data.db.unitlocalized.future.detail.UnitSpecificDetailFutureWeatherEntry
+import com.example.kotlinweatherapp.data.db.unitlocalized.future.list.UnitSpecificSimpleFutureWeatherEntry
 import com.example.kotlinweatherapp.data.network.FORECAST_DAYS_COUNT
 import com.example.kotlinweatherapp.data.network.Response.CurrentWeatherResponse
 import com.example.kotlinweatherapp.data.network.Response.FutureWeatherResponse
@@ -53,6 +54,20 @@ class ForecastRepositoryImpl(
                 futureWeatherDao.getSimpleWeatherForecastsMetric(startDate)
             } else {
                 futureWeatherDao.getSimpleWeatherForecastsImperial(startDate)
+            }
+        }
+    }
+
+    override suspend fun getFutureWeatherByDate(
+        date: LocalDate,
+        metric: Boolean
+    ): LiveData<out UnitSpecificDetailFutureWeatherEntry> {
+        return withContext(Dispatchers.IO) {
+            initWeatherData()
+            return@withContext if (metric) {
+                futureWeatherDao.getDetailedWeatherByDateMetric(date)
+            } else {
+                futureWeatherDao.getDetailedWeatherByDateImperial(date)
             }
         }
     }

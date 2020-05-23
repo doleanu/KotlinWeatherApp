@@ -2,8 +2,8 @@ package com.example.kotlinweatherapp.ui.weather.future.list
 
 import android.annotation.SuppressLint
 import com.example.kotlinweatherapp.R
-import com.example.kotlinweatherapp.data.db.unitlocalized.future.MetricSimpleFutureWeatherEntry
-import com.example.kotlinweatherapp.data.db.unitlocalized.future.UnitSpecificSimpleFutureWeatherEntry
+import com.example.kotlinweatherapp.data.db.unitlocalized.future.list.MetricSimpleFutureWeatherEntry
+import com.example.kotlinweatherapp.data.db.unitlocalized.future.list.UnitSpecificSimpleFutureWeatherEntry
 import com.example.kotlinweatherapp.internal.glide.GlideApp
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
