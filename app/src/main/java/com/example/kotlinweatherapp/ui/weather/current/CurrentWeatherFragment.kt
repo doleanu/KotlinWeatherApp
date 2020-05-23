@@ -1,6 +1,5 @@
 package com.example.kotlinweatherapp.ui.weather.current
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,12 +43,12 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         val currentWeather = viewModel.weather.await()
         val weatherLocation = viewModel.weatherLocation.await()
 
-        weatherLocation.observe(this@CurrentWeatherFragment, Observer { location ->
+        weatherLocation.observe(this@CurrentWeatherFragment.viewLifecycleOwner, Observer { location ->
             if(location == null) return@Observer
             updateLocatiom(location.name)
         })
 
-        currentWeather.observe(this@CurrentWeatherFragment, Observer {
+        currentWeather.observe(this@CurrentWeatherFragment.viewLifecycleOwner, Observer {
             if (it == null) {
                 return@Observer
             }
@@ -63,7 +62,7 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
             updateVisibility(it.visibilityDistance)
 
             GlideApp.with(this@CurrentWeatherFragment)
-                .load(it.conditionIconUrl)
+                .load("http:" + it.conditionIconUrl)
                 .into(imageView_condition_icon)
         })
     }

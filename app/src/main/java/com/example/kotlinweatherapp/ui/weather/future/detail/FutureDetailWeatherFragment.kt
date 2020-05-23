@@ -54,12 +54,12 @@ class FutureDetailWeatherFragment : ScopedFragment(), KodeinAware {
         val futureWeather = viewModel.weather.await()
         val weatherLocation = viewModel.weatherLocation.await()
 
-        weatherLocation.observe(this@FutureDetailWeatherFragment, Observer { location ->
+        weatherLocation.observe(this@FutureDetailWeatherFragment.viewLifecycleOwner, Observer { location ->
             if (location == null) return@Observer
             updateLocation(location.name)
         })
 
-        futureWeather.observe(this@FutureDetailWeatherFragment, Observer { weatherEntry ->
+        futureWeather.observe(this@FutureDetailWeatherFragment.viewLifecycleOwner, Observer { weatherEntry ->
             if (weatherEntry == null) return@Observer
 
             updateDate(weatherEntry.date)
