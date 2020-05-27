@@ -19,6 +19,7 @@ import org.kodein.di.generic.instance
 
 class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
 
+    // the one inside forecastApplication
     override val kodein by closestKodein()
     private  val viewModelFactory: CurrentWeatherViewModelFactory by instance()
 
@@ -49,6 +50,7 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         })
 
         currentWeather.observe(this@CurrentWeatherFragment.viewLifecycleOwner, Observer {
+            // because we observe, the db will not always have data into it
             if (it == null) {
                 return@Observer
             }

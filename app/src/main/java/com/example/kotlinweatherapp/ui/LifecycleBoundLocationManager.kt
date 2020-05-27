@@ -25,7 +25,7 @@ class LifecycleBoundLocationManager(
         priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
     }
 
-    // when on resume in called in main activity, the startLocationUpdates is called
+    // when on resume is called in main activity, this function is called
     // At this point, permission has already been checked (in MainActivity for example) so we can safely suppress warning
     @SuppressLint("MissingPermission")
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
@@ -33,6 +33,7 @@ class LifecycleBoundLocationManager(
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null)
     }
 
+    // called when event is paused
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun removeLocationUpdates() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)

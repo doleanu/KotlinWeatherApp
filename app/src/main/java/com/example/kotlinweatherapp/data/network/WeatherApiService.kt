@@ -29,10 +29,12 @@ interface WeatherApiService {
         @Query("days") days: Int
     ): Deferred<FutureWeatherResponse>
 
+    // same as static fun
     companion object {
         operator fun invoke(
             connectivityInterceptorImpl: ConnectivityInterceptorImpl
         ): WeatherApiService {
+            // intercepts the Req and builds the URL
             val requestInterceptor = Interceptor { chain ->
 
                 val url = chain.request()
@@ -49,16 +51,17 @@ interface WeatherApiService {
                 return@Interceptor chain.proceed(request)
             }
 
+            // to intercepts every call
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(requestInterceptor)
-                .addInterceptor(connectivityInterceptorImpl)
+                .addInterceptor(connectivityInterceptorImpl) // check if conn to internet
                 .build()
 
             return Retrofit.Builder()
                 .client(okHttpClient)
                 .baseUrl("http://api.weatherapi.com/v1/")
-                .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory()) // tells retrofit we're using coroutines
+                .addConverterFactory(GsonConverterFactory.create()) // tells Retrofit to parse data using GSON
                 .build()
                 .create(WeatherApiService::class.java)
         }

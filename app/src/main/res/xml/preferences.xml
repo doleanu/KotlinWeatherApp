@@ -17,6 +17,7 @@
             android:summary="The location for which the weather is displayed"
             android:defaultValue="Bucharest"
             android:dependency="USE_DEVICE_LOCATION"/>
+<!--        enables editing if switch is false -->
 
     </PreferenceCategory>
 

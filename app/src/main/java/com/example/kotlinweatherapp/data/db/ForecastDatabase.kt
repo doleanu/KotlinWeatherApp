@@ -22,7 +22,7 @@ abstract class ForecastDatabase: RoomDatabase() {
 
     // Singleton
     companion object {
-        // all the threads have imm access to this prop
+        // all the threads have immediate access to this prop
         @Volatile private var instance: ForecastDatabase? = null
 
         // to make sure that no threads are doing the same thing
@@ -34,7 +34,8 @@ abstract class ForecastDatabase: RoomDatabase() {
         }
 
         // initialise database stored under local storage
-        private fun buildDatabase(context: Context) = Room.databaseBuilder(
+        private fun buildDatabase(context: Context) =
+            Room.databaseBuilder(
                 context.applicationContext,
                 ForecastDatabase::class.java,
                 "forecast.db"

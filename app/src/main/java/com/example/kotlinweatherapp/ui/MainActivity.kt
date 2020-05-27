@@ -44,10 +44,12 @@ class MainActivity : AppCompatActivity(), KodeinAware {
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
 
+        // makes the link between bottom_nav and fragments
         bottom_nav.setupWithNavController(navController)
 
         NavigationUI.setupActionBarWithNavController(this, navController)
 
+        // permissions
         requestLocationPermissions()
 
         if (hasLocationPermission()) {
@@ -57,6 +59,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         }
     }
 
+    // request permission for location
     private fun requestLocationPermissions() {
         ActivityCompat.requestPermissions(
             this,
@@ -72,6 +75,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
+    // after user gives or not permissions
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -90,6 +94,9 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         LifecycleBoundLocationManager(this, fusedLocationProviderClient, locationCallback)
     }
 
+    /**
+     * Back arrow
+     */
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, null)
     }

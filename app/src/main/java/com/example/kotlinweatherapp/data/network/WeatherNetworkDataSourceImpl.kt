@@ -7,26 +7,28 @@ import com.example.kotlinweatherapp.data.network.Response.CurrentWeatherResponse
 import com.example.kotlinweatherapp.data.network.Response.FutureWeatherResponse
 import com.example.kotlinweatherapp.internal.NoConnectivityException
 
-const val FORECAST_DAYS_COUNT = 7
+const val FORECAST_DAYS_COUNT = 3
 
 class WeatherNetworkDataSourceImpl(
     private val weatherApiService: WeatherApiService
 ) : WeatherNetworkDataSource {
 
+    // because LiveData cannot be changed
     private val _downloadedCurrentWeather = MutableLiveData<CurrentWeatherResponse>()
     override val downloadedCurrentWeather: LiveData<CurrentWeatherResponse>
         get() = _downloadedCurrentWeather
 
+    // suspend = can suspend the exec of coroutine
     override suspend fun fetchCurrentWeather(location: String) {
         try {
             val fetchedCurrentWeather = weatherApiService
                 .getCurrentWeather(location)
                 .await()
-            
+
             _downloadedCurrentWeather.postValue(fetchedCurrentWeather)
         }
         catch (e: NoConnectivityException) {
-            Log.e("Connectivity", "No internet connection", e)
+            Log.e("Connectivity", "No Internet connection", e)
         }
     }
 

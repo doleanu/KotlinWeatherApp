@@ -13,14 +13,14 @@ import com.example.kotlinweatherapp.internal.asDeferred
 import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.Deferred
 
-// key used to save and retrieve custom location setted in SharedPreferences
+// key used to save and retrieve custom location set in SharedPreferences
 const val CUSTOM_LOCATION = "CUSTOM_LOCATION"
 
 // key used to save and retrieve current location of the user from SharedPreferences
 const val USE_DEVICE_LOCATION = "USE_DEVICE_LOCATION"
 
 class LocationProviderImpl(
-    private val fusedLocationProviderClient: FusedLocationProviderClient,
+    private val fusedLocationProviderClient: FusedLocationProviderClient, // from package
     context: Context
 ) : PreferencesProvider(context), LocationProvider {
     private val appContext = context.applicationContext
@@ -66,7 +66,6 @@ class LocationProviderImpl(
         return preferences.getBoolean(USE_DEVICE_LOCATION, true)
     }
 
-    @SuppressLint("MissingPermission")
     private fun getLastDeviceLocation(): Deferred<Location?> {
         if (hasLocationPermission()) {
             return fusedLocationProviderClient.lastLocation.asDeferred()

@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
+// local scope that will use main thread
 abstract class ScopedFragment: Fragment(), CoroutineScope {
     private lateinit var job: Job
 

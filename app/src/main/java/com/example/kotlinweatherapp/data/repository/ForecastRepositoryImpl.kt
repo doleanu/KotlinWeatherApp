@@ -25,6 +25,7 @@ class ForecastRepositoryImpl(
     private val locationProvider: LocationProvider
 ) : ForecastRepository {
 
+    // creates a cache for downloaded weather
     init {
         weatherNetworkDataSource.apply {
             downloadedCurrentWeather.observeForever { newCurrentWeather ->
@@ -39,6 +40,7 @@ class ForecastRepositoryImpl(
     override suspend fun getCurrentWeather(metric: Boolean): LiveData<out UnitSpecificCurrentWeatherEntry> {
         initWeatherData()
         return withContext(Dispatchers.IO) {
+            // @withContext = returns a value.
             return@withContext if (metric) currentWeatherDao.getWeatherMetric()
             else currentWeatherDao.getWeatherImperial()
         }
@@ -100,6 +102,7 @@ class ForecastRepositoryImpl(
         }
     }
 
+    // check if the weather needs to be fetched
     private suspend fun initWeatherData() {
         val lastWeatherLocation = weatherLocationDao.getLocationNonLive()
 
@@ -128,6 +131,7 @@ class ForecastRepositoryImpl(
         )
     }
 
+    // check if 30 minutes passed from last API call
     private fun isFetchCurrentNeeded(lastFetchTime: ZonedDateTime): Boolean {
         val thirtyMinutesAgo = ZonedDateTime.now().minusMinutes(30)
 

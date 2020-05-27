@@ -19,8 +19,11 @@ import org.kodein.di.android.x.androidXModule
 import org.kodein.di.generic.*
 import org.threeten.bp.LocalDate
 
+// was set in android manifest to use this class when app is launched
 class ForecastApplication: Application(), KodeinAware {
     override val kodein: Kodein = Kodein.lazy {
+
+        // to add what android needs and use instance()
         import(androidXModule(this@ForecastApplication))
 
         bind() from singleton { ForecastDatabase(instance()) }
@@ -41,7 +44,10 @@ class ForecastApplication: Application(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
+        // init datetime  lib
         AndroidThreeTen.init(this)
+
+        // if the used has not set any preferences, use the default ones
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
     }
 }

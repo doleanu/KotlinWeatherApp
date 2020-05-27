@@ -7,6 +7,7 @@ import com.example.kotlinweatherapp.internal.UnitSystem
 import com.example.kotlinweatherapp.internal.lazyDeferred
 import com.resocoder.forecastmvvm.ui.base.WeatherViewModel
 
+// the view model exposes data for the view
 class CurrentWeatherViewModel(
     private val forecastRepository: ForecastRepository,
     unitProvider: UnitProvider

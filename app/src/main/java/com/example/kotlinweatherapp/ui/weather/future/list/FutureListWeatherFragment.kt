@@ -46,6 +46,7 @@ class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
         bindUI()
     }
 
+    // in android we can only update the UI using the main thread
     private fun bindUI() = launch(Dispatchers.Main) {
         val futureWeatherEntries = viewModel.weatherEntries.await()
         val weatherLocation = viewModel.weatherLocation.await()
