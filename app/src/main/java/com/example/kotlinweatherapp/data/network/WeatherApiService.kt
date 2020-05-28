@@ -13,7 +13,6 @@ import retrofit2.http.Query
 
 const val API_KEY = "b7395d60ad20417890b222007202704"
 
-
 interface WeatherApiService {
 
     // http://api.weatherapi.com/v1/current.json?key=b7395d60ad20417890b222007202704&q=Iasi
@@ -59,7 +58,7 @@ interface WeatherApiService {
 
             return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("http://api.weatherapi.com/v1/")
+                .baseUrl("https://api.weatherapi.com/v1/")
                 .addCallAdapterFactory(CoroutineCallAdapterFactory()) // tells retrofit we're using coroutines
                 .addConverterFactory(GsonConverterFactory.create()) // tells Retrofit to parse data using GSON
                 .build()
