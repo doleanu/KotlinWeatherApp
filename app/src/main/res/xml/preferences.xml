@@ -15,7 +15,7 @@
             android:key="CUSTOM_LOCATION"
             android:title="Location"
             android:summary="The location for which the weather is displayed"
-            android:defaultValue="Bucharest"
+            android:defaultValue="Santiago Villa Mobile Home Park"
             android:dependency="USE_DEVICE_LOCATION"/>
 <!--        enables editing if switch is false -->
 
