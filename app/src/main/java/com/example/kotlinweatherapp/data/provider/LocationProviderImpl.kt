@@ -23,6 +23,7 @@ class LocationProviderImpl(
     private val fusedLocationProviderClient: FusedLocationProviderClient, // from package
     context: Context
 ) : PreferencesProvider(context), LocationProvider {
+
     private val appContext = context.applicationContext
 
     override suspend fun hasLocationChanged(lastWeatherLocation: WeatherLocation): Boolean {
@@ -66,6 +67,7 @@ class LocationProviderImpl(
         return preferences.getBoolean(USE_DEVICE_LOCATION, true)
     }
 
+    @SuppressLint("MissingPermission")
     private fun getLastDeviceLocation(): Deferred<Location?> {
         if (hasLocationPermission()) {
             return fusedLocationProviderClient.lastLocation.asDeferred()
