@@ -6,7 +6,7 @@ import org.threeten.bp.format.DateTimeFormatter
 
 object LocalDateConverter {
     @TypeConverter
-    @JvmStatic
+    @JvmStatic // to tell Java that date is static
     fun stringToDate(str: String?) = str?.let {
         LocalDate.parse(it, DateTimeFormatter.ISO_LOCAL_DATE)
     }
